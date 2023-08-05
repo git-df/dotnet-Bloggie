@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Persistence;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,14 @@ namespace Persistence.Repositories
     {
         public TagRepository(BloggieDbContext bloggieDbContext) : base(bloggieDbContext)
         {
+        }
+
+        public async Task<List<Tag>> GetAllDistinctByName()
+        {
+            var tags = await _dbContext.Tags.ToListAsync();
+
+
+            return tags.DistinctBy(x => x.Name.ToLower()).ToList();
         }
     }
 }

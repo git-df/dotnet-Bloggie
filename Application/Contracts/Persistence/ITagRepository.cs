@@ -9,5 +9,6 @@ namespace Application.Contracts.Persistence
 {
     public interface ITagRepository : IBaseRepository<Tag>
     {
+        Task<List<Tag>> GetAllDistinctByName();
     }
 }
