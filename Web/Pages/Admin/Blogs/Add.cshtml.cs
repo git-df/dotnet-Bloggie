@@ -1,0 +1,46 @@
+using Application.Models;
+using Application.Models.Enums;
+using Application.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
+
+namespace Web.Pages.Admin.Blogs
+{
+    public class AddModel : PageModel
+    {
+        private readonly IBlogPostService _blogPostService;
+
+        [BindProperty]
+        public AddBlogPostModel AddBlogPostModel { get; set; } = new AddBlogPostModel() { PublishedDate = DateTime.UtcNow.Date };
+
+        [BindProperty]
+        public IFormFile FeaturedImage { get; set; }
+
+        public AddModel(IBlogPostService blogPostService)
+        {
+            _blogPostService = blogPostService;
+        }
+
+        public void OnGet()
+        {
+        }
+
+        public async Task<ActionResult> OnPostAsync()
+        {
+            var response = await _blogPostService.AddBlogPost(AddBlogPostModel);
+
+            if (response.AlertType != MessageAlertType.None)
+            {
+                TempData["Alert"] = AlertModel.GetJsonString(response.Message, response.AlertType);
+            }
+
+            if (response.Success)
+            {
+                return RedirectToPage("/Admin/Blogs/List");
+            }
+
+            return Page();
+        }
+    }
+}

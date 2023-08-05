@@ -1,0 +1,32 @@
+﻿@using Application.Models.Enums;
+
+@{
+    //var alert = (AlertModel?)ViewData["Alert"];
+    
+    var alert = AlertModel.GetFromTempData(TempData["Alert"]);
+
+    if (alert != null && alert.Type != MessageAlertType.None && !string.IsNullOrWhiteSpace(alert.Message))
+    {
+        var alertClass = "";
+
+        switch (alert.Type)
+        {
+            case MessageAlertType.Success:
+                alertClass = "alert-success";
+                break;
+            case MessageAlertType.Warning:
+                alertClass = "alert-warning";
+                break;
+            case MessageAlertType.Error:
+                alertClass = "alert-danger";
+                break;
+        }
+
+        <div class="container mb-5">
+            <div class="alert @alertClass alert-dismissible fade show mb-5" role="alert">
+                @Html.Raw(alert.Message)
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    }
+}
