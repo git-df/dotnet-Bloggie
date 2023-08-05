@@ -11,10 +11,12 @@ namespace Application.Mapper
 {
     public class MappingProfile : Profile
     {
-        public MappingProfile() 
+        public MappingProfile()
         {
             CreateMap<AddBlogPostModel, BlogPost>();
             CreateMap<BlogPost, ListBlogPostModel>();
+            CreateMap<BlogPost, HomeBlogPostModel>();
+            CreateMap<BlogPost, DetailsBlogPostModel>();
             CreateMap<BlogPost, EditBlogPostModel>().ReverseMap();
         }
     }

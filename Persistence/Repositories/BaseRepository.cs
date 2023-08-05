@@ -11,7 +11,7 @@ namespace Persistence.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly BloggieDbContext _dbContext;
+        protected readonly BloggieDbContext _dbContext;
 
         public BaseRepository(BloggieDbContext bloggieDbContext)
         {

@@ -15,5 +15,7 @@ namespace Application.Services.Interfaces
         Task<BaseResponse> DeleteBlogPost(Guid id);
         Task<BaseResponse<EditBlogPostModel>> GetBlogPostToEdit(Guid model);
         Task<BaseResponse<List<ListBlogPostModel>>> GetAllBlogPosts();
+        Task<BaseResponse<List<HomeBlogPostModel>>> GetHomeBlogPosts();
+        Task<BaseResponse<DetailsBlogPostModel>> GetBlogPostDetails(string urlHandle);
     }
 }

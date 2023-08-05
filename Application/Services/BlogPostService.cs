@@ -95,6 +95,18 @@ namespace Application.Services
             return new BaseResponse<List<ListBlogPostModel>>(_mapper.Map<List<ListBlogPostModel>>(blogPostList));
         }
 
+        public async Task<BaseResponse<DetailsBlogPostModel>> GetBlogPostDetails(string urlHandle)
+        {
+            var blogPost = await _blogPostRepository.GetByUrlHandle(urlHandle);
+
+            if (blogPost == null)
+            {
+                return new BaseResponse<DetailsBlogPostModel>(false, "Blog Post not exist", MessageAlertType.Error);
+            }
+
+            return new BaseResponse<DetailsBlogPostModel>(_mapper.Map<DetailsBlogPostModel>(blogPost));
+        }
+
         public async Task<BaseResponse<EditBlogPostModel>> GetBlogPostToEdit(Guid model)
         {
             var existBlogPost = await _blogPostRepository.GetById(model);
@@ -105,6 +117,23 @@ namespace Application.Services
             }
 
             return new BaseResponse<EditBlogPostModel>(_mapper.Map<EditBlogPostModel>(existBlogPost));
+        }
+
+        public async Task<BaseResponse<List<HomeBlogPostModel>>> GetHomeBlogPosts()
+        {
+            var blogs = await _blogPostRepository.GetAll();
+
+            if (blogs == null)
+            {
+                return new BaseResponse<List<HomeBlogPostModel>>(false, "Something went wrong", MessageAlertType.Error);
+            }
+
+            if (!blogs.Any())
+            {
+                return new BaseResponse<List<HomeBlogPostModel>>(false, "No blog posts", MessageAlertType.Warning);
+            }
+
+            return new BaseResponse<List<HomeBlogPostModel>>(_mapper.Map<List<HomeBlogPostModel>>(blogs));
         }
     }
 }

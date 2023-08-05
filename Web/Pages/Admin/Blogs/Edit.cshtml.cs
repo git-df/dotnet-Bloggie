@@ -26,6 +26,11 @@ namespace Web.Pages.Admin.Blogs
         {
             var response = await _blogPostService.GetBlogPostToEdit(id);
 
+            if (response.AlertType != MessageAlertType.None)
+            {
+                TempData["Alert"] = AlertModel.GetJsonString(response.Message, response.AlertType);
+            }
+
             if (response.Success)
             {
                 EditBlogPostModel = response.Data;
