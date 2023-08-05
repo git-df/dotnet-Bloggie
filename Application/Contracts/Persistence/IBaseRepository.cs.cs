@@ -12,6 +12,7 @@ namespace Application.Contracts.Persistence
         Task<T?> GetById(Guid id);
         Task<List<T>> GetAll();
         Task<T?> Add(T entity);
+        Task<List<T>> AddRange(List<T> entities);
         Task<T?> Update(T entity);
         Task Delete(T entity);
         Task DeleteRange(List<T> entities);

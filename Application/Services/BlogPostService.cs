@@ -19,11 +19,13 @@ namespace Application.Services
     {
         private readonly IMapper _mapper;
         private readonly IBlogPostRepository _blogPostRepository;
+        private readonly ITagRepository _tagRepository;
 
-        public BlogPostService(IMapper mapper, IBlogPostRepository blogPostRepository)
+        public BlogPostService(IMapper mapper, IBlogPostRepository blogPostRepository, ITagRepository tagRepository)
         {
             _mapper = mapper;
             _blogPostRepository = blogPostRepository;
+            _tagRepository = tagRepository;
         }
 
         public async Task<BaseResponse> AddBlogPost(AddBlogPostModel model)
@@ -73,7 +75,30 @@ namespace Application.Services
                 return new BaseResponse(false, "The date cannot be past", MessageAlertType.Warning);
             }
 
-            var editedBlogPost = await _blogPostRepository.Update(_mapper.Map<BlogPost>(model));
+            var blogPostWithTags = await _blogPostRepository.GetByIdWithTags(model.Id);
+
+            if (blogPostWithTags == null)
+            {
+                return new BaseResponse(false, "Something went wrong", MessageAlertType.Error);
+            }
+
+            if (blogPostWithTags.Tags.Any())
+            {
+                await _tagRepository.DeleteRange(blogPostWithTags.Tags.ToList());
+            }
+
+            blogPostWithTags.Author = model.Author;
+            blogPostWithTags.Heading = model.Heading;
+            blogPostWithTags.PageTitle = model.PageTitle;
+            blogPostWithTags.PublishedDate = model.PublishedDate;
+            blogPostWithTags.ShortDescription = model.ShortDescription;
+            blogPostWithTags.Content = model.Content;
+            blogPostWithTags.Visible = model.Visible;
+            blogPostWithTags.FeaturedImageUrl = model.FeaturedImageUrl;
+            blogPostWithTags.UrlHandle = model.UrlHandle;
+            blogPostWithTags.Tags = model.Tags;
+
+            var editedBlogPost = await _blogPostRepository.Update(_mapper.Map<BlogPost>(blogPostWithTags));
 
             if (editedBlogPost == null)
             {
@@ -109,7 +134,7 @@ namespace Application.Services
 
         public async Task<BaseResponse<EditBlogPostModel>> GetBlogPostToEdit(Guid model)
         {
-            var existBlogPost = await _blogPostRepository.GetById(model);
+            var existBlogPost = await _blogPostRepository.GetByIdWithTags(model);
 
             if (existBlogPost == null)
             {

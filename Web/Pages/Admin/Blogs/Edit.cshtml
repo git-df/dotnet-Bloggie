@@ -77,6 +77,11 @@
                 <span asp-validation-for="EditBlogPostModel.Author" class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+                <label for="tags" class="form-label">Tags (comma separated)</label>
+                <input type="text" class="form-control" id="tags" asp-for="Tags" />
+            </div>
+
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="visible" asp-for="EditBlogPostModel.Visible">
                 <label class="form-check-label" for="visible">Visible</label>

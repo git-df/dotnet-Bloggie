@@ -16,6 +16,11 @@ namespace Persistence.Repositories
         {
         }
 
+        public async Task<BlogPost?> GetByIdWithTags(Guid id)
+        {
+            return await _dbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<BlogPost?> GetByUrlHandle(string urlHandle)
         {
             return await _dbContext.BlogPosts.FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Application.Models.Enums;
 using System;
+using Domain.Entities;
 
 namespace Web.Pages.Admin.Blogs
 {
@@ -16,6 +17,9 @@ namespace Web.Pages.Admin.Blogs
 
         [BindProperty]
         public IFormFile FeaturedImage { get; set; }
+
+        [BindProperty]
+        public string Tags { get; set; }
 
         public EditModel(IBlogPostService blogPostService)
         {
@@ -35,6 +39,11 @@ namespace Web.Pages.Admin.Blogs
             {
                 EditBlogPostModel = response.Data;
 
+                if (EditBlogPostModel.Tags != null && EditBlogPostModel.Tags.Any())
+                {
+                    Tags = string.Join(',', EditBlogPostModel.Tags.Select(x => x.Name));
+                }
+
                 return Page();
             }
 
@@ -43,6 +52,11 @@ namespace Web.Pages.Admin.Blogs
 
         public async Task<IActionResult> OnPostEdit()
         {
+            if (Tags != null && Tags.Any())
+            {
+                EditBlogPostModel.Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag { Name = x.Trim() }));
+            }
+
             var response = await _blogPostService.EditBlogPost(EditBlogPostModel);
 
             if (response.AlertType != MessageAlertType.None)

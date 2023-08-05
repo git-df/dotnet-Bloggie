@@ -10,5 +10,6 @@ namespace Application.Contracts.Persistence
     public interface IBlogPostRepository : IBaseRepository<BlogPost>
     {
         Task<BlogPost?> GetByUrlHandle(string urlHandle);
+        Task<BlogPost?> GetByIdWithTags(Guid id);
     }
 }
