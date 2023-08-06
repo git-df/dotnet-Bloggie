@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Data;
 
@@ -11,9 +12,11 @@ using Persistence.Data;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BloggieDbContext))]
-    partial class BloggieDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230806090235_Auth")]
+    partial class Auth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,17 +234,15 @@ namespace Persistence.Migrations
                         {
                             Id = "ef95714c-0958-4770-99e6-91bf2f2aad68",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3d5c6747-d498-4664-8030-25f02d3a6364",
+                            ConcurrencyStamp = "15e7445b-511e-43e2-921a-891ae60918f4",
                             Email = "sa@bloggie.pl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "SA@BLOGGIE.PL",
-                            NormalizedUserName = "SA",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFEk4iDyjqecJKBx5TVO4FdWKTfO9DgCD6Qc3IeE6P5H/tLOBU26c+D3C0+fAFMYEA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELp3Okhaj49A4UV1Y5v+TXYd/7Xw3wGRu8xI3/2lEKiGUHYgrJZJpoy3Z6BxDjebYA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "35d6dd7f-bebc-4385-aea4-4abaa5a7f681",
+                            SecurityStamp = "d2f90287-c3a8-4fca-b354-0c1d326b258f",
                             TwoFactorEnabled = false,
-                            UserName = "sa"
+                            UserName = "sa@bloggie.pl"
                         });
                 });
 

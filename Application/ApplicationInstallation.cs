@@ -20,6 +20,7 @@ namespace Application
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IBlogPostService, BlogPostService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

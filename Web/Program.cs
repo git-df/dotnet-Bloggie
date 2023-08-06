@@ -1,5 +1,8 @@
 using Persistence;
 using Application;
+using Microsoft.AspNetCore.Identity;
+using Domain.Entities;
+using Persistence.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,24 @@ builder.Services.AddControllers();
 //Dependency Injection
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplication(builder.Configuration);
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<BloggieDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(op =>
+{
+    op.Password.RequireDigit = false;
+    op.Password.RequireUppercase = false;
+    op.Password.RequireLowercase = false;
+    op.Password.RequireNonAlphanumeric = false;
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/auth/signin";
+    options.AccessDeniedPath = "/auth/signout";
+});
 
 var app = builder.Build();
 
@@ -26,6 +47,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

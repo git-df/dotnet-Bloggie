@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Application.Models.Enums;
 using System;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Pages.Admin.Blogs
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly IBlogPostService _blogPostService;

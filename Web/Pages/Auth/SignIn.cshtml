@@ -1,0 +1,32 @@
+﻿@page
+@model Web.Pages.Auth.SignInModel
+@{
+}
+
+<div class="container mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+            <partial name="_Alert" />
+
+            <h1 class="mb-3 h3">Sign In</h1>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label" for="userName">Username</label>
+                    <input type="text" class="form-control" id="userName" asp-for="SignInUser.UserName" />
+                    <span asp-validation-for="SignInUser.UserName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" class="form-control" id="userName" asp-for="SignInUser.Password" />
+                    <span asp-validation-for="SignInUser.Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="submit">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

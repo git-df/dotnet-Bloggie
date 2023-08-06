@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> _signInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,21 +27,41 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a href="#" 
-                                class="nav-link dropdown-toggle" 
-                                role="button" 
-                                data-bs-toggle="dropdown" 
-                                aria-expanded="false"
-                                id="navbarDropDownAdmin">
-                                Admin
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropDownAdmin">
-                                <li><a href="/Admin/Blogs/Add" class="dropdown-item">Add Blog Post</a></li>
-                                <li><a href="/Admin/Blogs/List" class="dropdown-item">Blog Posts List</a></li>
-                            </ul>
-                        </li>
+
+                        @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a href="#"
+                                   class="nav-link dropdown-toggle"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false"
+                                   id="navbarDropDownAdmin">
+                                    Admin
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropDownAdmin">
+                                    <li><a href="/Admin/Blogs/Add" class="dropdown-item">Add Blog Post</a></li>
+                                    <li><a href="/Admin/Blogs/List" class="dropdown-item">Blog Posts List</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
+
+                    <div class="d-flex align-items-center">
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            <div class="me-3 text-light">
+                                @User?.Identity?.Name
+                            </div>
+
+                            <a href="/auth/signout" class="btn bg-light text-dark">Sign Out</a>
+                        }
+                        else
+                        {
+                            <a href="/auth/signin" class="btn bg-light text-dark me-3">Sign In</a>
+                            <a href="/auth/signup" class="btn bg-light text-dark">Sign up</a>
+                        }
+                    </div>
                 </div>
             </div>
         </nav>

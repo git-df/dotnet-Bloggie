@@ -1,9 +1,11 @@
-﻿using Application.Contracts.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Application.Contracts.Persistence;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Persistence.Repositories;
+using Domain.Entities;
 
 namespace Persistence
 {
@@ -13,6 +15,8 @@ namespace Persistence
         {
             services.AddDbContext<BloggieDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("BloggieDbConnectionString")));
+
+
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IBlogPostRepository, BlogPostRepository>();

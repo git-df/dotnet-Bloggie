@@ -1,12 +1,14 @@
 using Application.Models;
 using Application.Models.Enums;
 using Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 
 namespace Web.Pages.Admin.Blogs
 {
+    [Authorize(Roles = "Admin")]
     public class ListModel : PageModel
     {
         private readonly IBlogPostService _blogPostService;
