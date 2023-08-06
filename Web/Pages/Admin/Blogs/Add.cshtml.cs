@@ -30,6 +30,7 @@ namespace Web.Pages.Admin.Blogs
 
         public void OnGet()
         {
+            var a = User.Identity.Name;
         }
 
         public async Task<ActionResult> OnPostAsync()

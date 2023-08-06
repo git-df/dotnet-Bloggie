@@ -1,17 +1,44 @@
-﻿using Domain.Entities;
+﻿using Application.Services.Interfaces;
+using Domain.Common;
+using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Persistence.Data
 {
     public class BloggieDbContext : IdentityDbContext
     {
+        private readonly IUserContextProvider _userContextProvider;
+
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
-        public BloggieDbContext(DbContextOptions options) : base(options)
+        public BloggieDbContext(DbContextOptions options, IUserContextProvider userContextProvider) : base(options)
         {
+            _userContextProvider = userContextProvider;
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.CreatedBy = _userContextProvider.GetCurrentUserName();
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.Updated = DateTime.Now;
+                        entry.Entity.UpdatedBy = _userContextProvider.GetCurrentUserName();
+                        break;
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

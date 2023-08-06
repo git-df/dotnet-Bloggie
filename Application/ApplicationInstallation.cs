@@ -17,6 +17,7 @@ namespace Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+            services.AddScoped<IUserContextProvider, UserContextProvider>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IBlogPostService, BlogPostService>();
             services.AddScoped<ITagService, TagService>();

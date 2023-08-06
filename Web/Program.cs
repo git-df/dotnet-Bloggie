@@ -11,8 +11,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
 //Dependency Injection
-builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplication(builder.Configuration);
+builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<BloggieDbContext>()

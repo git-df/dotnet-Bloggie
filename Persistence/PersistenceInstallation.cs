@@ -16,8 +16,6 @@ namespace Persistence
             services.AddDbContext<BloggieDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("BloggieDbConnectionString")));
 
-
-
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IBlogPostRepository, BlogPostRepository>();
             services.AddScoped<ITagRepository, TagRepository>();

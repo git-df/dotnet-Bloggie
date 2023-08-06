@@ -3,6 +3,7 @@ using Application.Models.Enums;
 using Application.Models.Responses;
 using Application.Models.Validators;
 using Application.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,13 @@ namespace Application.Services
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public UserService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<BaseResponse> SignIn(SignInUserModel model)
@@ -75,5 +78,7 @@ namespace Application.Services
 
             return new BaseResponse(false, "Something went wrong", MessageAlertType.Error);
         }
+
+
     }
 }
