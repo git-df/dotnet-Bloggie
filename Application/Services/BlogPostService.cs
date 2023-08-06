@@ -144,9 +144,9 @@ namespace Application.Services
             return new BaseResponse<EditBlogPostModel>(_mapper.Map<EditBlogPostModel>(existBlogPost));
         }
 
-        public async Task<BaseResponse<List<HomeBlogPostModel>>> GetHomeBlogPosts()
+        public async Task<BaseResponse<List<HomeBlogPostModel>>> GetHomeBlogPosts(string? tag)
         {
-            var blogs = await _blogPostRepository.GetAll();
+            var blogs = await _blogPostRepository.GetAllByTag(tag);
 
             if (blogs == null)
             {

@@ -11,6 +11,7 @@ namespace Domain.Entities
         public Guid Id { get; set; }
         public string Name { get; set; }
 
+        public BlogPost BlogPost { get; set; }
         public Guid BlogPostId { get; set; }
     }
 }

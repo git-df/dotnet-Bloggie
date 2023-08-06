@@ -64,7 +64,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogPosts");
+                    b.ToTable("BlogPosts", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Tag", b =>
@@ -84,7 +84,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("BlogPostId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Tag", b =>

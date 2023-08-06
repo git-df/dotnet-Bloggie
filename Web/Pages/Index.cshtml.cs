@@ -26,7 +26,7 @@ namespace Web.Pages
         }
 
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(string? tag)
         {
             var responseTags = await _tagService.GetTagsNames();
 
@@ -40,7 +40,7 @@ namespace Web.Pages
                 Tags = responseTags.Data;
             }
 
-            var responsePosts = await _blogPostService.GetHomeBlogPosts();
+            var responsePosts = await _blogPostService.GetHomeBlogPosts(tag);
 
             if (responsePosts.AlertType != MessageAlertType.None)
             {

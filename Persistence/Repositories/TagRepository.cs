@@ -18,10 +18,11 @@ namespace Persistence.Repositories
 
         public async Task<List<Tag>> GetAllDistinctByName()
         {
-            var tags = await _dbContext.Tags.ToListAsync();
+            var tags = await _dbContext.Tags.Include(x => x.BlogPost).Where(x => x.BlogPost.Visible && x.BlogPost.PublishedDate <= DateTime.UtcNow).ToListAsync();
 
+            tags = tags.DistinctBy(x => x.Name.ToLower()).ToList();
 
-            return tags.DistinctBy(x => x.Name.ToLower()).ToList();
+            return tags;
         }
     }
 }

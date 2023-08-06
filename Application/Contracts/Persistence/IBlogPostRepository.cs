@@ -11,5 +11,6 @@ namespace Application.Contracts.Persistence
     {
         Task<BlogPost?> GetByUrlHandle(string urlHandle);
         Task<BlogPost?> GetByIdWithTags(Guid id);
+        Task<List<BlogPost>> GetAllByTag(string? tag);
     }
 }
