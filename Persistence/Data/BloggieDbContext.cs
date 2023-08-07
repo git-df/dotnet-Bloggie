@@ -16,6 +16,8 @@ namespace Persistence.Data
 
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<BlogPostLike> BlogPostLikes { get; set; }
+        public DbSet<BlogPostComment> blogPostComments { get; set; }
 
         public BloggieDbContext(DbContextOptions options, IUserContextProvider userContextProvider) : base(options)
         {

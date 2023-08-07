@@ -19,6 +19,8 @@ namespace Persistence
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IBlogPostRepository, BlogPostRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>();
+            services.AddScoped<IBlogPostCommentRepository, BlogPostCommentRepository>();
 
             return services;
         }

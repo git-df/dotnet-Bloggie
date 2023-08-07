@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Data;
 
@@ -11,9 +12,11 @@ using Persistence.Data;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BloggieDbContext))]
-    partial class BloggieDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230807143608_BlogPostLikes")]
+    partial class BlogPostLikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,44 +82,6 @@ namespace Persistence.Migrations
                     b.ToTable("BlogPosts");
                 });
 
-            modelBuilder.Entity("Domain.Entities.BlogPostComment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BlogPostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogPostId");
-
-                    b.ToTable("blogPostComments");
-                });
-
             modelBuilder.Entity("Domain.Entities.BlogPostLike", b =>
                 {
                     b.Property<Guid>("Id")
@@ -126,18 +91,6 @@ namespace Persistence.Migrations
                     b.Property<Guid>("BlogPostId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -145,7 +98,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("BlogPostId");
 
-                    b.ToTable("BlogPostLikes");
+                    b.ToTable("BlogPostLike");
                 });
 
             modelBuilder.Entity("Domain.Entities.Tag", b =>
@@ -324,15 +277,15 @@ namespace Persistence.Migrations
                         {
                             Id = "ef95714c-0958-4770-99e6-91bf2f2aad68",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9da32f1d-bc05-4b63-9330-bf5440f70c38",
+                            ConcurrencyStamp = "c41390de-f006-4f10-9541-328d3ab44896",
                             Email = "sa@bloggie.pl",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "SA@BLOGGIE.PL",
                             NormalizedUserName = "SA",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIx2ZfugbFHN280s2rK+hnn6JWeJSpbAjJFbd2LqXA8NG63dnAWGwapHVRScZmuxZQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBoz34a95z77YjNiJOfDKeKypg+0vLix8LRAIMq7tERED/ZY/+PwbXfUXDn3vYiznQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5f74d71a-3a13-4774-a116-4bf1a90f5268",
+                            SecurityStamp = "b02cc961-6005-45fa-a358-87638c83298f",
                             TwoFactorEnabled = false,
                             UserName = "sa"
                         });
@@ -436,15 +389,6 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.BlogPostComment", b =>
-                {
-                    b.HasOne("Domain.Entities.BlogPost", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("BlogPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.BlogPostLike", b =>
                 {
                     b.HasOne("Domain.Entities.BlogPost", null)
@@ -518,8 +462,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.BlogPost", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Likes");
 
                     b.Navigation("Tags");

@@ -22,6 +22,8 @@ namespace Application
             services.AddScoped<IBlogPostService, BlogPostService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBlogPostLikeService, BlogPostLikeService>();
+            services.AddScoped<IBlogPostCommentService, BlogPostCommentService>();
 
             return services;
         }

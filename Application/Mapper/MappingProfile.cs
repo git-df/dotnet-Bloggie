@@ -22,6 +22,8 @@ namespace Application.Mapper
             CreateMap<TagInputModel, Tag>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.value.ToUpper()))
                 .ReverseMap();
+            CreateMap<AddBlogPostLikeModel, BlogPostLike>();
+            CreateMap<AddBlogPostCommentModel, BlogPostComment>();
         }
     }
 }
