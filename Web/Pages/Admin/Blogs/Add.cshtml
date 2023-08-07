@@ -70,7 +70,7 @@
 
             <div class="mb-3">
                 <label for="tags" class="form-label">Tags (comma separated)</label>
-                <input type="text" class="form-control" id="tags" asp-for="Tags" />
+                <input type="text" class="form-control text-uppercase" id="tags" asp-for="Tags" />
             </div>
 
             <div class="form-check mb-3">
@@ -87,6 +87,13 @@
 
 @section Scripts {
     <script>
+        const featuredImageUploadElement = document.getElementById('featuredImageUpload');
+        const featuredImageUrl = document.getElementById('featuredImageUrl');
+        const featuredImageDisplay = document.getElementById('featuredImageDisplay');
+        const tagsInput = document.getElementById('tags');
+
+        new Tagify(tagsInput);
+
         var editor = new FroalaEditor('#content', {
             imageUploadURL: '/api/images',
             imageUploadMethod: 'POST',
@@ -104,9 +111,6 @@
             }
         });
 
-        const featuredImageUploadElement = document.getElementById('featuredImageUpload');
-        const featuredImageUrl = document.getElementById('featuredImageUrl');
-        const featuredImageDisplay = document.getElementById('featuredImageDisplay');
 
         async function uploadFeaturedImage(e) {
             let data = new FormData();

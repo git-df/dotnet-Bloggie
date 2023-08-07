@@ -1,6 +1,7 @@
 using Application.Models;
 using Application.Models.Enums;
 using Application.Services.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ namespace Web.Pages.Admin.Blogs
     public class AddModel : PageModel
     {
         private readonly IBlogPostService _blogPostService;
+        private readonly IMapper _mapper;
 
         [BindProperty]
         public AddBlogPostModel AddBlogPostModel { get; set; } = new AddBlogPostModel() { PublishedDate = DateTime.UtcNow.Date };
@@ -23,9 +25,10 @@ namespace Web.Pages.Admin.Blogs
         [BindProperty]
         public string Tags { get; set; }
 
-        public AddModel(IBlogPostService blogPostService)
+        public AddModel(IBlogPostService blogPostService, IMapper mapper)
         {
             _blogPostService = blogPostService;
+            _mapper = mapper;
         }
 
         public void OnGet()
@@ -35,10 +38,10 @@ namespace Web.Pages.Admin.Blogs
 
         public async Task<ActionResult> OnPostAsync()
         {
-            if (Tags != null && Tags.Any())
+            if (!string.IsNullOrWhiteSpace(Tags))
             {
-                AddBlogPostModel.Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag { Name = x.Trim() }));
-
+                var tags = JsonSerializer.Deserialize<List<TagInputModel>>(Tags);
+                AddBlogPostModel.Tags = _mapper.Map<List<Tag>>(tags);
             }
 
             var response = await _blogPostService.AddBlogPost(AddBlogPostModel);

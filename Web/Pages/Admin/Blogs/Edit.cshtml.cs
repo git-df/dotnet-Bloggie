@@ -6,6 +6,8 @@ using Application.Models.Enums;
 using System;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
+using AutoMapper;
 
 namespace Web.Pages.Admin.Blogs
 {
@@ -13,6 +15,7 @@ namespace Web.Pages.Admin.Blogs
     public class EditModel : PageModel
     {
         private readonly IBlogPostService _blogPostService;
+        private readonly IMapper _mapper;
 
         [BindProperty]
         public EditBlogPostModel EditBlogPostModel { get; set; }
@@ -23,9 +26,10 @@ namespace Web.Pages.Admin.Blogs
         [BindProperty]
         public string Tags { get; set; }
 
-        public EditModel(IBlogPostService blogPostService)
+        public EditModel(IBlogPostService blogPostService, IMapper mapper)
         {
             _blogPostService = blogPostService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> OnGetAsync(Guid id)
@@ -54,9 +58,10 @@ namespace Web.Pages.Admin.Blogs
 
         public async Task<IActionResult> OnPostEdit()
         {
-            if (Tags != null && Tags.Any())
+            if (!string.IsNullOrWhiteSpace(Tags))
             {
-                EditBlogPostModel.Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag { Name = x.Trim() }));
+                var tags = JsonSerializer.Deserialize<List<TagInputModel>>(Tags);
+                EditBlogPostModel.Tags = _mapper.Map<List<Tag>>(tags);
             }
 
             var response = await _blogPostService.EditBlogPost(EditBlogPostModel);

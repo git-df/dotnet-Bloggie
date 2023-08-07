@@ -21,7 +21,7 @@
                     {
                         foreach (var tag in Model.BlogPost.Tags)
                         {
-                            <span class="badge bg-dark">@tag.Name</span>
+                            <a href="/@tag.Name.ToLower()"><span class="badge bg-dark">@tag.Name</span></a>
                         }
                     }
                 </div>
