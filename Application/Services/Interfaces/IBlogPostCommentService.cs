@@ -11,5 +11,6 @@ namespace Application.Services.Interfaces
     public interface IBlogPostCommentService
     {
         Task<BaseResponse> AddComment(AddBlogPostCommentModel model);
+        Task<BaseResponse<List<BlogPostCommentOnList>>> GetCommentsByPost(Guid blogPostId);
     }
 }

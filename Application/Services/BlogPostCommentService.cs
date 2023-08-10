@@ -38,5 +38,17 @@ namespace Application.Services
 
             return new BaseResponse("Comment added", MessageAlertType.Success);
         }
+
+        public async Task<BaseResponse<List<BlogPostCommentOnList>>> GetCommentsByPost(Guid blogPostId)
+        {
+            var comments = await _blogPostCommentRepository.GetComentsByBlogPostId(blogPostId);
+
+            if (comments == null || comments.Count == 0)
+            {
+                return new BaseResponse<List<BlogPostCommentOnList>>(false, "No comments");
+            }
+
+            return new BaseResponse<List<BlogPostCommentOnList>>(data: _mapper.Map<List<BlogPostCommentOnList>>(comments));
+        }
     }
 }

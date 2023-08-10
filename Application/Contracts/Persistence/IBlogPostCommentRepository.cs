@@ -9,5 +9,6 @@ namespace Application.Contracts.Persistence
 {
     public interface IBlogPostCommentRepository : IBaseRepository<BlogPostComment>
     {
+        Task<List<BlogPostComment>> GetComentsByBlogPostId(Guid blogPostId);
     }
 }

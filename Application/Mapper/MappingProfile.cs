@@ -24,6 +24,8 @@ namespace Application.Mapper
                 .ReverseMap();
             CreateMap<AddBlogPostLikeModel, BlogPostLike>();
             CreateMap<AddBlogPostCommentModel, BlogPostComment>();
+            CreateMap<BlogPostComment, BlogPostCommentOnList>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.CreatedBy));
         }
     }
 }

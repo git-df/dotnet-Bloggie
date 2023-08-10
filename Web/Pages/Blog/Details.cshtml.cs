@@ -19,6 +19,8 @@ namespace Web.Pages.Blog
         [BindProperty]
         public Guid BlogPostId { get; set; }
 
+        public List<BlogPostCommentOnList> Comments { get; set; }
+
         public DetailsBlogPostModel BlogPost { get; set; }
 
         public int LikesCount { get; set; }
@@ -56,6 +58,13 @@ namespace Web.Pages.Blog
                 {
                     var likedResponse = await _blogPostLikeService.CheckUserLiked(response.Data.Id, Guid.Parse(userId));
                     Liked = likedResponse.Data;
+                }
+
+                var commentResponse = await _blogPostCommentService.GetCommentsByPost(BlogPostId);
+
+                if (commentResponse.Success)
+                {
+                    Comments = commentResponse.Data;
                 }
 
                 return Page();
