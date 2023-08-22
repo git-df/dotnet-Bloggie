@@ -4,6 +4,7 @@ Welcome to Bloggie! This project is focused on developing a feature-rich and cus
 
 ## Technologies
 * Razor Pages
+* MS SQL
 
 Project is created with:
 - Entity Framework Core (7.0.9)
