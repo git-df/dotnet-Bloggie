@@ -1,6 +1,6 @@
 # Bloggie
 
-Welcome to dotnet-Bloggie! This project is focused on developing a feature-rich and customizable blogging platform using the .NET Core Razor Pages. With Bloggie, users can create, manage, and share their blog posts with a user-friendly interface.
+Welcome to Bloggie! This project is focused on developing a feature-rich and customizable blogging platform using the .NET Core Razor Pages. With Bloggie, users can create, manage, and share their blog posts with a user-friendly interface.
 
 ## Technologies
 * Razor Pages
