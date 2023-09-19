@@ -43,7 +43,7 @@ namespace Application.Models.Validators
             RuleFor(x => x.PublishedDate)
                 .NotEmpty()
                 .WithMessage("Date is required")
-                .Must(x => x >= DateTime.UtcNow)
+                .Must(x => x >= DateTime.UtcNow.Date)
                 .WithMessage("The date cannot be past");
         }
     }
