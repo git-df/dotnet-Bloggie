@@ -12,14 +12,20 @@ namespace Application.Models.Validators
         public SignUpValidator()
         {
             RuleFor(x => x.UserName)
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage("User name is required");
 
             RuleFor(x => x.Email)
                 .NotEmpty()
-                .EmailAddress();
+                .WithMessage("Email is required")
+                .EmailAddress()
+                .WithMessage("Email is incorect");
 
             RuleFor(x => x.Password)
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage("Password is required")
+                .MinimumLength(8)
+                .WithMessage("Minimum 8 character");
         }
     }
 }

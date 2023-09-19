@@ -50,12 +50,7 @@ namespace Application.Services
 
             if (!validationResult.IsValid)
             {
-                return new BaseResponse(false);
-            }
-
-            if (model.Password.Length < 8)
-            {
-                return new BaseResponse(false, "Password must be 8 characters long", MessageAlertType.Warning);
+                return new BaseResponse(validationResult);
             }
 
             var user = new IdentityUser()

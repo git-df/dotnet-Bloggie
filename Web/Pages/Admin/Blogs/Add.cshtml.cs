@@ -46,6 +46,16 @@ namespace Web.Pages.Admin.Blogs
 
             var response = await _blogPostService.AddBlogPost(AddBlogPostModel);
 
+            ModelState.Clear();
+
+            if (response.ValidationErrors.Any())
+            {
+                foreach (var error in response.ValidationErrors)
+                {
+                    ModelState.AddModelError("AddBlogPostModel." + error.Property, error.Message);
+                }
+            }
+
             if (response.AlertType != MessageAlertType.None)
             {
                 TempData["Alert"] = AlertModel.GetJsonString(response.Message, response.AlertType);

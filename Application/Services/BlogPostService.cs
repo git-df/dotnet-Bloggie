@@ -35,12 +35,7 @@ namespace Application.Services
 
             if (!validationResult.IsValid)
             {
-                return new BaseResponse(false);
-            }
-
-            if (model.PublishedDate < DateTime.UtcNow.Date)
-            {
-                return new BaseResponse(false, "The date cannot be past", MessageAlertType.Warning);
+                return new BaseResponse(validationResult);
             }
 
             var newBlogPost = await _blogPostRepository.Add(_mapper.Map<BlogPost>(model));
@@ -67,12 +62,7 @@ namespace Application.Services
 
             if (!validationResult.IsValid)
             {
-                return new BaseResponse(false);
-            }
-
-            if (model.PublishedDate < DateTime.UtcNow.Date)
-            {
-                return new BaseResponse(false, "The date cannot be past", MessageAlertType.Warning);
+                return new BaseResponse(validationResult);
             }
 
             var blogPostWithTags = await _blogPostRepository.GetByIdWithTags(model.Id);

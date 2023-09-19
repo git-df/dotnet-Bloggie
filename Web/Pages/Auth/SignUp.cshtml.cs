@@ -2,6 +2,7 @@ using Application.Models;
 using Application.Models.Enums;
 using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web.Pages.Auth
@@ -25,6 +26,17 @@ namespace Web.Pages.Auth
         public async Task<IActionResult> OnPostAsync()
         {
             var response = await _userService.SignUp(SignUpUser);
+
+            ModelState.Clear();
+
+            if (response.ValidationErrors.Any())
+            {
+                foreach (var error in response.ValidationErrors)
+                {
+                    ModelState.AddModelError("SignUpUser."+error.Property, error.Message);
+                }
+            }
+
 
             if (response.AlertType != MessageAlertType.None)
             {

@@ -8,11 +8,34 @@ using System.Threading.Tasks;
 
 namespace Application.Models.Responses
 {
+    public class ValidationError
+    {
+        public string Property { get; set; }
+        public string Message { get; set; }
+
+        public ValidationError(string property, string message)
+        {
+            Property = property;
+            Message = message;
+        }
+    }
+
     public class BaseResponse
     {
         public bool Success { get; set; }
         public string? Message { get; set; }
         public MessageAlertType AlertType { get; set; } = MessageAlertType.None;
+        public List<ValidationError> ValidationErrors { get; set; } = new List<ValidationError>();
+
+        public BaseResponse(ValidationResult validationResult)
+        {
+            Success = false;
+
+            foreach (var item in validationResult.Errors)
+            {
+                ValidationErrors.Add(new ValidationError(item.PropertyName, item.ErrorMessage));
+            }
+        }
 
         public BaseResponse()
         {
@@ -59,6 +82,17 @@ namespace Application.Models.Responses
         public bool Success { get; set; }
         public string? Message { get; set; }
         public MessageAlertType AlertType { get; set; } = MessageAlertType.None;
+        public List<ValidationError> ValidationErrors { get; set; } = new List<ValidationError>();
+
+        public BaseResponse(ValidationResult validationResult)
+        {
+            Success = false;
+
+            foreach (var item in validationResult.Errors)
+            {
+                ValidationErrors.Add(new ValidationError(item.PropertyName, item.ErrorMessage));
+            }
+        }
 
         public BaseResponse()
         {
