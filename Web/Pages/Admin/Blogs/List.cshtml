@@ -20,6 +20,7 @@
                     <tr>
                         <td>Id</td>
                         <td>Heading</td>
+                        <td>Visible</td>
                         <td></td>
                     </tr>
                 </thead>
@@ -29,6 +30,12 @@
                         <tr>
                             <td>@blogPost.Id</td>
                             <td>@blogPost.Heading</td>
+                            <td>
+                                @if (blogPost.Visible)
+                                {
+                                    <span>✓</span>
+                                }
+                            </td>
                             <td><a href="/Admin/Blogs/Edit/@blogPost.Id">View</a></td>
                         </tr>
                     }

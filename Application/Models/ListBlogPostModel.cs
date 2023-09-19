@@ -10,5 +10,6 @@ namespace Application.Models
     {
         public Guid Id { get; set; }
         public string Heading { get; set; }
+        public bool Visible { get; set; }
     }
 }
