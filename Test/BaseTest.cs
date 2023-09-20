@@ -14,6 +14,7 @@ namespace Test
     {
         protected readonly IMapper _mapper;
         protected readonly Mock<ITagRepository> _tagRepository;
+        protected readonly Mock<IBlogPostLikeRepository> _blogPostLikeRepository;
 
         public BaseTest()
         {
@@ -25,6 +26,7 @@ namespace Test
             _mapper = configurationProvider.CreateMapper();
 
             _tagRepository = TagRepositoryMock.GetRepository();
+            _blogPostLikeRepository = BlogPostLikeRepositoryMock.GetRepository();
         }
     }
 }
