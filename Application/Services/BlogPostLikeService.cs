@@ -33,7 +33,7 @@ namespace Application.Services
                 return new BaseResponse<BlogPostLike>(false, "Something went wrong", MessageAlertType.Error);
             }
 
-            return new BaseResponse<BlogPostLike>("Liked blog post", MessageAlertType.Success);
+            return new BaseResponse<BlogPostLike>(newLike, "Liked blog post", MessageAlertType.Success);
         }
 
         public async Task<BaseResponse<bool>> CheckUserLiked(Guid blogPostId, Guid userId)
