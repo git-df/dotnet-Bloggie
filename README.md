@@ -11,3 +11,6 @@ Project is created with:
 - Cloudinary DotNet (1.22.0)
 - Fluent Validation (11.6.0)
 - Auto Mapper (12.0.1)
+- Xunit (2.4.2)
+- Moq (4.20.69)
+- Shouldly (4.2.1)
