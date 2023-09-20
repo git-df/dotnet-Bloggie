@@ -33,11 +33,24 @@ namespace Test.Mocks
                     return null;
                 });
 
+            _mockRepository.Setup(repo => repo.GetBlogPostLikesCount(It.IsAny<Guid>())).ReturnsAsync(
+                (Guid blogPostId) =>
+                {
+                    var blogPost = _context.BlogPosts.Find(x => x.Id == blogPostId);
+
+                    if (blogPost != null)
+                        return blogPost.Likes.Count;
+                        
+                    return 0;
+                });
+
+            _mockRepository.Setup(repo => repo.GetUserBlogPostLikesCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(
+                (Guid blogPostId, Guid userId) =>
+                {
+                    return _context.BlogPostLikes.Where(x => x.BlogPostId == blogPostId && x.UserId == userId).Count();
+                });
+
             return _mockRepository;
         }
     }
 }
-
-//GetBlogPostLikesCount
-//    GetUserBlogPostLikesCount
-//    Add
