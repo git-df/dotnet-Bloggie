@@ -300,6 +300,51 @@ namespace Test.Mocks.Data
             {
                 BlogPosts.Find(x => x.Id == like.BlogPostId)?.Likes.Add(like);
             }
+
+            BlogPostComments = new List<BlogPostComment>()
+            {
+                new BlogPostComment()
+                {
+                    Id = new Guid("b2d3c327-d820-493c-b1a9-8c4517075e3f"),
+                    Content = "Comment test1",
+                    BlogPostId = BlogPosts[0].Id,
+                    UserId = mockUsers[0].Id,
+                    DateAdded = DateTime.UtcNow.AddDays(-1),
+                    Created = DateTime.UtcNow,
+                    CreatedBy = "UnitTests",
+                    Updated = DateTime.UtcNow,
+                    UpdatedBy = "UnitTests"
+                },
+                new BlogPostComment()
+                {
+                    Id = new Guid("b46089da-2b44-42b9-a40f-19c86771e090"),
+                    Content = "Comment test2",
+                    BlogPostId = BlogPosts[2].Id,
+                    UserId = mockUsers[2].Id,
+                    DateAdded = DateTime.UtcNow.AddDays(-2),
+                    Created = DateTime.UtcNow,
+                    CreatedBy = "UnitTests",
+                    Updated = DateTime.UtcNow,
+                    UpdatedBy = "UnitTests"
+                },
+                new BlogPostComment()
+                {
+                    Id = new Guid("fb637ff8-96bb-4347-95e4-5b73df56f90f"),
+                    Content = "Comment test3",
+                    BlogPostId = BlogPosts[4].Id,
+                    UserId = mockUsers[4].Id,
+                    DateAdded = DateTime.UtcNow.AddDays(-3),
+                    Created = DateTime.UtcNow,
+                    CreatedBy = "UnitTests",
+                    Updated = DateTime.UtcNow,
+                    UpdatedBy = "UnitTests"
+                }
+            };
+
+            foreach(var comment in BlogPostComments)
+            {
+                BlogPosts.Find(x => x.Id == comment.BlogPostId)?.Comments.Add(comment);
+            }
         }
     }
 
